@@ -22,6 +22,7 @@ body {
     width: 90%;
     max-width: 1200px;
     margin: 20px auto;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust grid dynamically */
 }
 
 /* Card Design */
@@ -61,25 +62,6 @@ body {
     background-color: #0056b3;
 }
 
-/* Responsive Grid Layout */
-@media (max-width: 600px) {  
-    #container {
-        grid-template-columns: 1fr; /* 1 card per row (Mobile) */
-    }
-}
-
-@media (min-width: 601px) and (max-width: 900px) {  
-    #container {
-        grid-template-columns: 1fr 1fr; /* 2 cards per row (Tablet) */
-    }
-}
-
-@media (min-width: 901px) {  
-    #container {
-        grid-template-columns: repeat(4, 1fr); /* 4 cards per row (Laptop/Desktop) */
-    }
-}
-
 /* Modal (Popup) */
 .modal {
     display: none; 
@@ -91,6 +73,15 @@ body {
     background: rgba(0, 0, 0, 0.5); 
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
 }
 
 /* Modal Box */
@@ -102,6 +93,19 @@ body {
     max-width: 500px;
     text-align: center;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 0.3s ease-in-out;
+}
+
+/* Smooth Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Close Button */

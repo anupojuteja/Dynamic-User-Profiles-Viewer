@@ -18,7 +18,7 @@ const displayUsers = (items) => {
     container.innerHTML = items.map(item => {
         return `
         <div class="card" id="user-${item.id}">
-            <img src="${item.image}" alt="${item.firstName}">
+            <img src="${item.image}" alt="${item.firstName} ${item.lastName}">
             <h2>${item.firstName} ${item.lastName}</h2>
             <button class="btn" data-id="${item.id}">View More</button>
         </div>
@@ -29,7 +29,7 @@ const displayUsers = (items) => {
     document.querySelectorAll(".btn").forEach(button => {
         button.addEventListener("click", (event) => {
             const userId = event.target.getAttribute("data-id");
-            const user = users.find(u => u.id = userId);
+            const user = users.find(u => u.id == userId);
             showPopup(user);
         });
     });
@@ -45,17 +45,26 @@ const showPopup = (user) => {
         <p><strong>Email:</strong> ${user.email}</p>
         <p><strong>Phone:</strong> ${user.phone}</p>
         <p><strong>Age:</strong> ${user.age}</p>
-        <p><strong>Address:</strong> ${user.address.address},
+        <p><strong>Address:</strong> ${user.address.address}, 
          ${user.address.city}, ${user.address.state}</p>
         <p><strong>Company:</strong> ${user.company.name}</p>
     `;
 
-    modal.style.display = "flex"; // Show modal
+    modal.classList.add("show"); // Ensure modal appears properly
 };
 
 // Close button functionality
-document.getElementById("close-modal").addEventListener("click", () => {
-    document.getElementById("modal").style.display = "none"; // Hide modal
+const closeModal = () => {
+    const modal = document.getElementById("modal");
+    modal.classList.remove("show"); // Hide modal smoothly
+};
+
+document.getElementById("close-modal").addEventListener("click", closeModal);
+
+document.getElementById("modal").addEventListener("click", (event) => {
+    if (event.target === document.getElementById("modal")) {
+        closeModal();
+    }
 });
 
 // Fetch data when page loads
